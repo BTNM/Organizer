@@ -20,9 +20,46 @@ public class Main {
 
         //createDirectory();
 
-        File testFile = new File("C:\\Users\\Bao Thien\\Downloads\\testFolder\\textFileTestTest5.txt");
+        //File testFile = new File("C:\\Users\\Bao Thien\\Downloads\\testFolder\\textFileTest2.txt");
+        File t = new File("C:/Users/Bao Thien/Downloads/testfolder/folder3/tFile2.txt");
         String p = "C:/Users/Bao Thien/Downloads/testfolder/textFile3.txt";
         String str = "Susumiya Haruhi's Disappearence";
+
+        //createDirectory("tf4","C:/Users/Bao Thien/Downloads/testfolder/folder4/");
+
+
+        try {
+            //t.getParentFile().mkdirs(); // create parent directory
+
+            // creates new file if the file doesnt exists
+            if (t.getParentFile().exists()) {
+                if (!t.exists()) {
+                    t.createNewFile();
+                } else {
+                    System.out.println("The folder exists");
+                }
+            } else
+                System.out.println("From the path: " + t.getAbsolutePath()+" \nThe folder is missing: "+ t.getParentFile().getName());
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") );
+
+        for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
+            for (File b1: a) {
+                System.out.println(b1);
+            }
+
+            for (File b2:a) {
+                System.out.println(b2);
+            }
+        }
+        // prøv å print til egen text fil
+
 
         //readStringToTxtFile(p, str);
         //NameList nameList = new NameList();
@@ -48,20 +85,30 @@ public class Main {
         System.out.println(f);
         */
 
-        DoubleArraylistToFile("C:\\Users\\Bao Thien\\Downloads\\testFolder","AnimeListTestFile", splitFolderAlfabetically("C:\\Users\\Bao Thien\\Dropbox\\Download"));
+        //DoubleArraylistToFile("C:\\Users\\Bao Thien\\Downloads\\testFolder","AnimeListTestFile", splitFolderAlfabetically("C:\\Users\\Bao Thien\\Dropbox\\Download"));
 
     }
+
+    private static void createDirectory(String folderName, String path) {
+        //System.out.println(testFile.getAbsolutePath());
+        //String pathName = "C:/Users/Bao Thien/Downloads/testFolder/";
+
+        String pathName = path;
+
+        new File(pathName+folderName).mkdirs();
+    }
+
 
     private static ArrayList<ArrayList<File>> specificFolderContent(String path) {
         File specificFolder = new File(path);
 
-        ArrayList<File> normalFiles = new ArrayList<File>(Arrays.asList(specificFolder.listFiles(File::isFile) ) );
-        ArrayList<File> directoryFiles = new ArrayList<File>(Arrays.asList(specificFolder.listFiles(File::isDirectory) ) );
+        ArrayList<File> directoryFiles = new ArrayList<>(Arrays.asList(specificFolder.listFiles(File::isDirectory) ) );
+        ArrayList<File> normalFiles = new ArrayList<>(Arrays.asList(specificFolder.listFiles(File::isFile) ) );
 
         Collections.sort(normalFiles);
         Collections.sort(directoryFiles);
 
-        ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<ArrayList<File>>(Arrays.asList(directoryFiles, normalFiles));
+        ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>(Arrays.asList(directoryFiles, normalFiles));
 
         return allFolderFiles;
     }
@@ -87,7 +134,6 @@ public class Main {
         String stringPT = "^(P|Q|R|S|T)";
         String stringUZ = "^(U|V|W|X|Y|Z)";
 
-        String text;
 
         Pattern pAE = Pattern.compile(stringAE);
         Pattern pFJ = Pattern.compile(stringFJ);
@@ -97,7 +143,7 @@ public class Main {
 
         Matcher m;
 
-
+        String text;
         for (File f : directoryFiles) {
             text = f.getName();
 
@@ -325,16 +371,6 @@ public class Main {
 
         }
 
-    }
-
-    private static void createDirectory(String path ,String folderName) {
-        //System.out.println(testFile.getAbsolutePath());
-        //String pathName = "C:/Users/Bao Thien/Downloads/";
-
-        String pathName = path;
-        //folderName = "testFolder";
-
-        new File(pathName+folderName).mkdirs();
     }
 
 
