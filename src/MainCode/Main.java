@@ -41,6 +41,7 @@ public class Main {
 
         //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") );
 
+        /*
         for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
             for (File b1: a) {
                 System.out.println(b1);
@@ -50,8 +51,24 @@ public class Main {
                 System.out.println(b2);
             }
         }
+        */
 
+        //consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder"));
+        //folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder");
 
+        ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent("C:/Users/Bao Thien/Downloads/testFolder");
+
+        ArrayList<File> directoryFiles = allFolderFiles.get(0);
+        ArrayList<File> normalFiles = allFolderFiles.get(1);
+
+        ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
+        ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
+
+        for (ArrayList<File> arr:directoryFilesSplitAlfa) {
+            for (File f:arr) {
+                System.out.println(f.getName());
+            }
+        }
 
         // prøv å print til egen text fil
 
@@ -92,7 +109,6 @@ public class Main {
         new File(pathName+folderName).mkdirs();
     }
 
-
     private static ArrayList<ArrayList<File>> specificFolderContent(String path) {
         File specificFolder = new File(path);
 
@@ -102,30 +118,16 @@ public class Main {
         Collections.sort(normalFiles);
         Collections.sort(directoryFiles);
 
-        ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>(Arrays.asList(directoryFiles, normalFiles));
+        ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>();
+        //= new ArrayList<>(Arrays.asList(directoryFiles, normalFiles));
+
+        allFolderFiles.add(directoryFiles);
+        allFolderFiles.add(normalFiles);
 
         return allFolderFiles;
     }
 
-    private static ArrayList<ArrayList<ArrayList<File>>> folderSplitAlfabetically(String path) {
-        ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent(path);
-
-        ArrayList<File> directoryFiles = allFolderFiles.get(0);
-        ArrayList<File> normalFiles = allFolderFiles.get(1);
-
-        ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
-        ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
-
-        ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>();
-        allFilesSplitAlfa.add(directoryFilesSplitAlfa);
-        allFilesSplitAlfa.add(normalFilesSplitAlfa);
-
-        //consolePrintArraylist(filesSplitAlfabetically);
-
-        return allFilesSplitAlfa;
-    }
-
-    public static ArrayList<ArrayList<File>> splitAlfabetically (ArrayList<File> fileList) {
+    private static ArrayList<ArrayList<File>> splitAlfabetically (ArrayList<File> fileList) {
         ArrayList<File> filesAE = new ArrayList<>();
         ArrayList<File> filesFJ = new ArrayList<>();
         ArrayList<File> filesKO = new ArrayList<>();
@@ -171,8 +173,33 @@ public class Main {
         return filesSplitAlfabetically;
     }
 
-    private static void consolePrintArraylist(ArrayList<ArrayList<File>> filesSplitAlfa) {
-        for (ArrayList<File> arr : filesSplitAlfa) {
+    private static ArrayList<ArrayList<ArrayList<File>>> folderSplitAlfabetically(String path) {
+        ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent(path);
+
+        ArrayList<File> directoryFiles = allFolderFiles.get(0);
+        ArrayList<File> normalFiles = allFolderFiles.get(1);
+
+        ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
+        ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
+
+        ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>();
+
+        allFilesSplitAlfa.add(directoryFilesSplitAlfa);
+        allFilesSplitAlfa.add(normalFilesSplitAlfa);
+
+        return allFilesSplitAlfa;
+    }
+
+    private static void consolePrintArraylist(ArrayList<ArrayList<ArrayList<File>>> filesSplitAlfa) {
+        ArrayList<ArrayList<File>> directoryFiles = filesSplitAlfa.get(0);
+        ArrayList<ArrayList<File>> normalFiles = filesSplitAlfa.get(1);
+
+        for (ArrayList<File> arr : directoryFiles) {
+            for (File f: arr) {
+                System.out.println(f.getName());
+            }
+        }
+        for (ArrayList<File> arr : normalFiles) {
             for (File f: arr) {
                 System.out.println(f.getName());
             }
@@ -300,7 +327,7 @@ public class Main {
         Pattern pPT = Pattern.compile(stringPT);
         Pattern pUZ = Pattern.compile(stringUZ);
 
-        Matcher m = pAE.matcher(text);
+        Matcher m;
 
         ArrayList<Pattern> patternList = new ArrayList<Pattern>(Arrays.asList(pAE,pFJ,pKO,pPT,pUZ) );
 
