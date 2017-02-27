@@ -4,10 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -16,17 +13,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Creating directory: ");
-
-        //createDirectory();
+        //System.out.println("Creating directory: ");
 
         //File testFile = new File("C:\\Users\\Bao Thien\\Downloads\\testFolder\\textFileTest2.txt");
         File t = new File("C:/Users/Bao Thien/Downloads/testfolder/folder3/tFile2.txt");
-        String p = "C:/Users/Bao Thien/Downloads/testfolder/textFile3.txt";
-        String str = "Susumiya Haruhi's Disappearence";
+        //String p = "C:/Users/Bao Thien/Downloads/testfolder/textFile3.txt";
+        //String str = "Susumiya Haruhi's Disappearence";
 
         //createDirectory("tf4","C:/Users/Bao Thien/Downloads/testfolder/folder4/");
-
 
         try {
             //t.getParentFile().mkdirs(); // create parent directory
@@ -40,8 +34,6 @@ public class Main {
                 }
             } else
                 System.out.println("From the path: " + t.getAbsolutePath()+" \nThe folder is missing: "+ t.getParentFile().getName());
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,6 +50,9 @@ public class Main {
                 System.out.println(b2);
             }
         }
+
+
+
         // prøv å print til egen text fil
 
 
@@ -69,21 +64,20 @@ public class Main {
         //splitFolderAlfabetically("C:\\Users\\Bao Thien\\Dropbox\\Download");
         //splitFolderAlfabetically("G:\\TextAloud");
 
-        /*
-        Pattern pat = Pattern.compile("(A|B|C|D|E)");
-        Matcher mat = pat.matcher("Black Mist Taht");
-        System.out.println(mat.find() );
 
-        Boolean g = mat.matches();
-        System.out.println(g);
+        //Pattern pat = Pattern.compile("(A|B|C|D|E)");
+        //Matcher mat = pat.matcher("Black Mist Taht");
+        //System.out.println(mat.find() );
+
+        //Boolean g = mat.matches();
+        //System.out.println(g);
 
         //boolean b = Pattern.matches("B.+", "Black Mist");
         //System.out.println(b);
 
-        String s = "Susumiya Haruhi";
-        boolean f = s.matches("S");
-        System.out.println(f);
-        */
+        //String s = "Susumiya Haruhi";
+        //boolean f = s.matches("S");
+        //System.out.println(f);
 
         //DoubleArraylistToFile("C:\\Users\\Bao Thien\\Downloads\\testFolder","AnimeListTestFile", splitFolderAlfabetically("C:\\Users\\Bao Thien\\Dropbox\\Download"));
 
@@ -113,19 +107,30 @@ public class Main {
         return allFolderFiles;
     }
 
-    private static ArrayList splitFolderAlfabetically(String path) {
-
+    private static ArrayList<ArrayList<ArrayList<File>>> folderSplitAlfabetically(String path) {
         ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent(path);
 
         ArrayList<File> directoryFiles = allFolderFiles.get(0);
         ArrayList<File> normalFiles = allFolderFiles.get(1);
 
-        ArrayList<File> filesAE = new ArrayList<File>();
-        ArrayList<File> filesFJ = new ArrayList<File>();
-        ArrayList<File> filesKO = new ArrayList<File>();
-        ArrayList<File> filesPT = new ArrayList<File>();
-        ArrayList<File> filesUZ = new ArrayList<File>();
+        ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
+        ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
 
+        ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>();
+        allFilesSplitAlfa.add(directoryFilesSplitAlfa);
+        allFilesSplitAlfa.add(normalFilesSplitAlfa);
+
+        //consolePrintArraylist(filesSplitAlfabetically);
+
+        return allFilesSplitAlfa;
+    }
+
+    public static ArrayList<ArrayList<File>> splitAlfabetically (ArrayList<File> fileList) {
+        ArrayList<File> filesAE = new ArrayList<>();
+        ArrayList<File> filesFJ = new ArrayList<>();
+        ArrayList<File> filesKO = new ArrayList<>();
+        ArrayList<File> filesPT = new ArrayList<>();
+        ArrayList<File> filesUZ = new ArrayList<>();
 
         //String pattern = "^[A-Za-z]*$";
         String stringAE = "^(A|B|C|D|E)";
@@ -134,7 +139,6 @@ public class Main {
         String stringPT = "^(P|Q|R|S|T)";
         String stringUZ = "^(U|V|W|X|Y|Z)";
 
-
         Pattern pAE = Pattern.compile(stringAE);
         Pattern pFJ = Pattern.compile(stringFJ);
         Pattern pKO = Pattern.compile(stringKO);
@@ -142,65 +146,41 @@ public class Main {
         Pattern pUZ = Pattern.compile(stringUZ);
 
         Matcher m;
+        String fName;
 
-        String text;
-        for (File f : directoryFiles) {
-            text = f.getName();
+        for (File f : fileList) {
+            fName = f.getName();
+            //patternMatcher(fName);
 
-            //patternMatcher(text);
-
-            if (pAE.matcher(text).find()) {
+            // will match the input against the pattern
+            if (pAE.matcher(fName).find()) {
                 filesAE.add(f);
-            } else if (pFJ.matcher(text).find() ) {
+            } else if (pFJ.matcher(fName).find() ) {
                 filesFJ.add(f);
-            } else if (pKO.matcher(text).find() ) {
+            } else if (pKO.matcher(fName).find() ) {
                 filesKO.add(f);
-            } else if (pPT.matcher(text).find() ) {
+            } else if (pPT.matcher(fName).find() ) {
                 filesPT.add(f);
-            } else if (pUZ.matcher(text).find() ) {
+            } else if (pUZ.matcher(fName).find() ) {
                 filesUZ.add(f);
             }
         }
 
-        ArrayList<ArrayList<File>> filesSplitAlfabetically = new ArrayList<ArrayList<File>>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ) );
-
-
-        consolePrintArraylist(filesSplitAlfabetically);
+        ArrayList<ArrayList<File>> filesSplitAlfabetically = new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ) );
 
         return filesSplitAlfabetically;
-
-        /*
-        System.out.println("Files in ABCDE:");
-        for (File f : filesAE) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in FGHIJ:");
-        for (File f : filesFJ) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in KLMNO:");
-        for (File f : filesKO) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in PQRST:");
-        for (File f : filesPT) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in UVWXYZ:");
-        for (File f : filesUZ) {
-            System.out.println(f.getName());
-        }
-
-        System.out.println("\nNormal files:");
-        for (File f : normalFiles) {
-            System.out.println(f.getName());
-        }
-
-        */
     }
 
-    private static void consolePrintArraylist(ArrayList<ArrayList<File>> filesSplitAlfabetically) {
+    private static void consolePrintArraylist(ArrayList<ArrayList<File>> filesSplitAlfa) {
+        for (ArrayList<File> arr : filesSplitAlfa) {
+            for (File f: arr) {
+                System.out.println(f.getName());
+            }
+        }
 
+
+
+        /*
         for (int i=0; i<filesSplitAlfabetically.size(); i++) {
             if (i==0) {
                 System.out.println("Files in ABCDE:");
@@ -218,19 +198,38 @@ public class Main {
                 System.out.println( filesSplitAlfabetically.get(i).get(j).getName() );
 
             }
-
         }
+        */
 
         /*
-        ArrayList<ArrayList<File>> allFiles = new ArrayList<ArrayList<File>>();
-        for (ArrayList<File> a : allFiles) {
-            for (File f: a) {
+        System.out.println("Files in ABCDE:");
+        for (File f : dFilesAE) {
+            System.out.println(f.getName());
+        }
+        System.out.println("\nFiles in FGHIJ:");
+        for (File f : dFilesFJ) {
+            System.out.println(f.getName());
+        }
+        System.out.println("\nFiles in KLMNO:");
+        for (File f : dFilesKO) {
+            System.out.println(f.getName());
+        }
+        System.out.println("\nFiles in PQRST:");
+        for (File f : filesPT) {
+            System.out.println(f.getName());
+        }
+        System.out.println("\nFiles in UVWXYZ:");
+        for (File f : filesUZ) {
+            System.out.println(f.getName());
+        }
 
-            }
-
+        System.out.println("\nNormal files:");
+        for (File f : normalFiles) {
+            System.out.println(f.getName());
         }
 
         */
+
 
     }
 
@@ -425,6 +424,7 @@ public class Main {
         }
 
     }
+
 
 
 }
