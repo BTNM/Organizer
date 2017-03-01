@@ -13,7 +13,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //File testFile = new File("C:\\Users\\Bao Thien\\Downloads\\testFolder\\textFileTest2.txt");
         File t = new File("C:/Users/Bao Thien/Downloads/testfolder/folder3/tFile2.txt");
         //String p = "C:/Users/Bao Thien/Downloads/testfolder/textFile3.txt";
         //String str = "Susumiya Haruhi's Disappearence";
@@ -44,12 +43,18 @@ public class Main {
             for (File b1: a) {
                 System.out.println(b1);
             }
+        }*/
 
-            for (File b2:a) {
-                System.out.println(b2);
+        ArrayList<ArrayList<File>> allFolder = new ArrayList<>();
+        allFolder = specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/");
+
+
+        for (ArrayList<File> a: splitAlfabetically(allFolder.get(0) ) ) {
+            for (File b1: a) {
+                System.out.println(b1);
             }
         }
-        */
+
 
         //consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder"));
         //folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder");
@@ -135,11 +140,11 @@ public class Main {
         ArrayList<File> filesUZ = new ArrayList<>();
 
         //String pattern = "^[A-Za-z]*$";
-        String stringAE = "^(A|B|C|D|E)";
-        String stringFJ = "^(F|G|H|I|J)";
-        String stringKO = "^(K|L|M|N|O)";
-        String stringPT = "^(P|Q|R|S|T)";
-        String stringUZ = "^(U|V|W|X|Y|Z)";
+        String stringAE = "^[A-Ea-e]";
+        String stringFJ = "^[F-Jf-j]";
+        String stringKO = "^[K-Ok-o]";
+        String stringPT = "^[P-Tp-t]";
+        String stringUZ = "^[U-Zu-z]";
 
         Pattern pAE = Pattern.compile(stringAE);
         Pattern pFJ = Pattern.compile(stringFJ);
