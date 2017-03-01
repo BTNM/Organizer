@@ -1,14 +1,16 @@
 package MainCode;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by BaoTNM on 07.08.2016.
  */
 public class NameList {
 
-    ArrayList<String> list;
+    ArrayList<Object> list;
 
     public NameList () {
         list = new ArrayList();
@@ -19,12 +21,12 @@ public class NameList {
         return list;
     }
 
+
+    /*
     public String getListItem(int i) {
         return list.get(i);
     }
 
-
-    /*
     public readFolderInventory () {
 
         try {

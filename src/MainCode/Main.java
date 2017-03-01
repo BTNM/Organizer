@@ -38,9 +38,7 @@ public class Main {
 
         //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") );
 
-        consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder\\folder1"));
-
-
+        consolePrintArraylist(folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder/folder1"));
 
 
         //for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
@@ -186,47 +184,18 @@ public class Main {
 
         System.out.println("\nDirectory files in the map: ");
         for (ArrayList<File> arr : directoryFiles) {
-            System.out.println("just check: "+arr.toString());
+            //System.out.println("just check: "+arr.toString());
             for (File f: arr) {
                 System.out.println(f.getName());
             }
         }
         System.out.println("\nNormal files in the map: ");
         for (ArrayList<File> arr : normalFiles) {
+
             for (File f: arr) {
                 System.out.println(f.getName());
             }
         }
-
-
-        /*
-        System.out.println("Files in ABCDE:");
-        for (File f : dFilesAE) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in FGHIJ:");
-        for (File f : dFilesFJ) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in KLMNO:");
-        for (File f : dFilesKO) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in PQRST:");
-        for (File f : filesPT) {
-            System.out.println(f.getName());
-        }
-        System.out.println("\nFiles in UVWXYZ:");
-        for (File f : filesUZ) {
-            System.out.println(f.getName());
-        }
-
-        System.out.println("\nNormal files:");
-        for (File f : normalFiles) {
-            System.out.println(f.getName());
-        }
-
-        */
 
 
     }
@@ -370,7 +339,6 @@ public class Main {
 
     }
 
-
     private static void ArrayListToFile(String folderName,String fileName,ArrayList<String> text) {
 
         String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
@@ -395,7 +363,6 @@ public class Main {
         }
 
     }
-
 
     private static void readFromFile (String folderName,String fileName,ArrayList<String> text) {
         String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
