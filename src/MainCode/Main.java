@@ -13,8 +13,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //System.out.println("Creating directory: ");
-
         //File testFile = new File("C:\\Users\\Bao Thien\\Downloads\\testFolder\\textFileTest2.txt");
         File t = new File("C:/Users/Bao Thien/Downloads/testfolder/folder3/tFile2.txt");
         //String p = "C:/Users/Bao Thien/Downloads/testfolder/textFile3.txt";
@@ -56,6 +54,7 @@ public class Main {
         //consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder"));
         //folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder");
 
+        /*
         ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent("C:/Users/Bao Thien/Downloads/testFolder");
 
         ArrayList<File> directoryFiles = allFolderFiles.get(0);
@@ -69,6 +68,7 @@ public class Main {
                 System.out.println(f.getName());
             }
         }
+        */
 
         // prøv å print til egen text fil
 
