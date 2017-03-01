@@ -9,17 +9,25 @@ import java.util.Objects;
  * Created by BaoTNM on 07.08.2016.
  */
 public class NameList {
+    ArrayList<File> mainList;
+    String name;
 
-    ArrayList<Object> list;
-
-    public NameList () {
-        list = new ArrayList();
-
+    public NameList (ArrayList<File> list) {
+        mainList = list;
     }
 
     public ArrayList getList() {
-        return list;
+        return mainList;
     }
+
+    public String getListName() {
+        return name;
+    }
+
+    public void setListName(String name) {
+        this.name = name;
+    }
+
 
 
     /*

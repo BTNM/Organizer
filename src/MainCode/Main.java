@@ -106,13 +106,17 @@ public class Main {
         Collections.sort(normalFiles);
         Collections.sort(directoryFiles);
 
+        NameList directoryF = new NameList(directoryFiles);
+        NameList normalF = new NameList(normalFiles);
+        /*
         ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>();
         //= new ArrayList<>(Arrays.asList(directoryFiles, normalFiles));
 
         allFolderFiles.add(directoryFiles);
         allFolderFiles.add(normalFiles);
 
-        return allFolderFiles;
+        return allFolderFiles;*/
+        return new ArrayList<ArrayList<File>>(Arrays.asList(directoryF.getList(),normalF.getList()));
     }
 
     private static ArrayList<ArrayList<File>> splitAlfabetically (ArrayList<File> fileList) {
@@ -159,9 +163,7 @@ public class Main {
             }
         }
 
-        ArrayList<ArrayList<File>> filesSplitAlfabetically = new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ,filesNotAlfa) );
-
-        return filesSplitAlfabetically;
+        return new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ,filesNotAlfa) );
     }
 
     private static ArrayList<ArrayList<ArrayList<File>>> folderSplitAlfabetically(String path) {
