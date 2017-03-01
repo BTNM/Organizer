@@ -38,42 +38,27 @@ public class Main {
 
         //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") );
 
-        /*
-        for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
-            for (File b1: a) {
-                System.out.println(b1);
-            }
-        }*/
-
-        ArrayList<ArrayList<File>> allFolder = new ArrayList<>();
-        allFolder = specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/");
+        consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder\\folder1"));
 
 
-        for (ArrayList<File> a: splitAlfabetically(allFolder.get(0) ) ) {
-            for (File b1: a) {
-                System.out.println(b1);
-            }
-        }
 
 
-        //consolePrintArraylist(folderSplitAlfabetically("C:\\Users\\Bao Thien\\Downloads\\testFolder"));
-        //folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder");
+        //for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
+        //    for (File b1: a) {
+        //        System.out.println(b1);
+        //    }
+        //}
 
-        /*
-        ArrayList<ArrayList<File>> allFolderFiles = specificFolderContent("C:/Users/Bao Thien/Downloads/testFolder");
 
-        ArrayList<File> directoryFiles = allFolderFiles.get(0);
-        ArrayList<File> normalFiles = allFolderFiles.get(1);
+        //ArrayList<ArrayList<File>> allFolder = new ArrayList<>();
+        //allFolder = specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/");
 
-        ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
-        ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
+        //for (ArrayList<File> a: splitAlfabetically(allFolder.get(1)) ) {
+        //    for (File b1: a) {
+        //        System.out.println(b1);
+        //    }
+        //}
 
-        for (ArrayList<File> arr:directoryFilesSplitAlfa) {
-            for (File f:arr) {
-                System.out.println(f.getName());
-            }
-        }
-        */
 
         // prøv å print til egen text fil
 
@@ -138,6 +123,7 @@ public class Main {
         ArrayList<File> filesKO = new ArrayList<>();
         ArrayList<File> filesPT = new ArrayList<>();
         ArrayList<File> filesUZ = new ArrayList<>();
+        ArrayList<File> filesNotAlfa = new ArrayList<>();
 
         //String pattern = "^[A-Za-z]*$";
         String stringAE = "^[A-Ea-e]";
@@ -170,10 +156,12 @@ public class Main {
                 filesPT.add(f);
             } else if (pUZ.matcher(fName).find() ) {
                 filesUZ.add(f);
+            } else {
+                filesNotAlfa.add(f);
             }
         }
 
-        ArrayList<ArrayList<File>> filesSplitAlfabetically = new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ) );
+        ArrayList<ArrayList<File>> filesSplitAlfabetically = new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ,filesNotAlfa) );
 
         return filesSplitAlfabetically;
     }
@@ -187,10 +175,7 @@ public class Main {
         ArrayList<ArrayList<File>> directoryFilesSplitAlfa = splitAlfabetically(directoryFiles);
         ArrayList<ArrayList<File>> normalFilesSplitAlfa = splitAlfabetically(normalFiles);
 
-        ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>();
-
-        allFilesSplitAlfa.add(directoryFilesSplitAlfa);
-        allFilesSplitAlfa.add(normalFilesSplitAlfa);
+        ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>(Arrays.asList(directoryFilesSplitAlfa, normalFilesSplitAlfa));
 
         return allFilesSplitAlfa;
     }
@@ -199,39 +184,20 @@ public class Main {
         ArrayList<ArrayList<File>> directoryFiles = filesSplitAlfa.get(0);
         ArrayList<ArrayList<File>> normalFiles = filesSplitAlfa.get(1);
 
+        System.out.println("\nDirectory files in the map: ");
         for (ArrayList<File> arr : directoryFiles) {
+            System.out.println("just check: "+arr.toString());
             for (File f: arr) {
                 System.out.println(f.getName());
             }
         }
+        System.out.println("\nNormal files in the map: ");
         for (ArrayList<File> arr : normalFiles) {
             for (File f: arr) {
                 System.out.println(f.getName());
             }
         }
 
-
-
-        /*
-        for (int i=0; i<filesSplitAlfabetically.size(); i++) {
-            if (i==0) {
-                System.out.println("Files in ABCDE:");
-            } else if (i==1) {
-                System.out.println("\nFiles in FGHIJ:");
-            } else if (i==2) {
-                System.out.println("\nFiles in KLMNO:");
-            } else if (i==3) {
-                System.out.println("\nFiles in PQRST:");
-            } else if (i==4) {
-                System.out.println("\nFiles in UVWXYZ:");
-            }
-
-            for (int j=0; j<filesSplitAlfabetically.get(i).size(); j++) {
-                System.out.println( filesSplitAlfabetically.get(i).get(j).getName() );
-
-            }
-        }
-        */
 
         /*
         System.out.println("Files in ABCDE:");
