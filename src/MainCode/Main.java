@@ -1,7 +1,5 @@
 package MainCode;
 
-import javax.lang.model.element.Name;
-import javax.print.attribute.standard.MediaSize;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,10 +36,9 @@ public class Main {
             e.printStackTrace();
         }
 
-        //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") );
-        //consolePrintArraylist(folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder/folder1"));
-        consolePrintArraylist(folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder/folder1"));
-
+        //System.out.println(specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder2/") );
+        //consolePrintArraylist(folderSplitAlfabetically("C:/Users/Bao Thien/Downloads/testFolder/folder2"));
+        consolePrintArraylist(folderSplitAlfabetical("C:/Users/Bao Thien/Downloads/testFolder/folder1"));
 
         //for (ArrayList<File> a: specificFolderContent("C:/Users/Bao Thien/Downloads/testfolder/folder1/") ) {
         //    for (File b1: a) {
@@ -87,24 +84,29 @@ public class Main {
         //System.out.println(f);
 
         //DoubleArraylistToFile("C:\\Users\\Bao Thien\\Downloads\\testFolder","AnimeListTestFile", splitFolderAlfabetically("C:\\Users\\Bao Thien\\Dropbox\\Download"));
-
     }
 
     private static void createDirectory(String folderName, String path) {
         //System.out.println(testFile.getAbsolutePath());
         //String pathName = "C:/Users/Bao Thien/Downloads/testFolder/";
+        //String pathName = path;
 
-        String pathName = path;
-
-        new File(pathName+folderName).mkdirs();
+        new File(path+folderName).mkdirs();
     }
 
     @SuppressWarnings("unchecked")
     private static ArrayList<NameList> specificFolderContent(String path) {
         File specificFolder = new File(path);
 
-        ArrayList<File> directoryFiles = new ArrayList<>(Arrays.asList(specificFolder.listFiles(File::isDirectory) ) );
-        ArrayList<File> normalFiles = new ArrayList<>(Arrays.asList(specificFolder.listFiles(File::isFile) ) );
+        File[] dF = specificFolder.listFiles(File::isDirectory);
+        if (dF == null)
+            throw new NullPointerException("Directory files in folder is null");
+        File [] nF = specificFolder.listFiles(File::isFile);
+        if (nF == null)
+            throw new NullPointerException("Normal files in folder is null");
+
+        ArrayList<File> directoryFiles = new ArrayList<>(Arrays.asList(dF) );
+        ArrayList<File> normalFiles = new ArrayList<>(Arrays.asList(nF ) );
 
         Collections.sort(normalFiles);
         Collections.sort(directoryFiles);
@@ -115,20 +117,20 @@ public class Main {
         NameList normalF = new NameList(normalFiles);
         normalF.setListName("Normal Files ");
 
+
         return new ArrayList<>(Arrays.asList(directoryF,normalF));
 
-        /*
-        ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>();
+        //ArrayList<ArrayList<File>> allFolderFiles = new ArrayList<>();
         //= new ArrayList<>(Arrays.asList(directoryFiles, normalFiles));
 
-        allFolderFiles.add(directoryFiles);
-        allFolderFiles.add(normalFiles);
+        //allFolderFiles.add(directoryFiles);
+        //allFolderFiles.add(normalFiles);
 
-        return allFolderFiles;*/
+        //return allFolderFiles;
     }
 
     @SuppressWarnings("unchecked")
-    private static ArrayList<NameList> splitAlfabetically (NameList fileList) {
+    private static ArrayList<NameList> splitAlfabetical (NameList fileList) {
         ArrayList<File> filesAE = new ArrayList<>();
         ArrayList<File> filesFJ = new ArrayList<>();
         ArrayList<File> filesKO = new ArrayList<>();
@@ -149,7 +151,7 @@ public class Main {
         Pattern pPT = Pattern.compile(stringPT);
         Pattern pUZ = Pattern.compile(stringUZ);
 
-        Matcher m;
+        //Matcher m;
         String fName;
         ArrayList<File> arr = fileList.getList();
 
@@ -198,11 +200,11 @@ public class Main {
     }
 
     @SuppressWarnings("unchecked")
-    private static ArrayList<NameList> folderSplitAlfabetically(String path) {
+    private static ArrayList<NameList> folderSplitAlfabetical(String path) {
         ArrayList<NameList> allFolderFiles = specificFolderContent(path);
 
-        ArrayList<NameList> directoryFilesSplitAlfa = splitAlfabetically(allFolderFiles.get(0) ); // adds directory files
-        ArrayList<NameList> normalFilesSplitAlfa = splitAlfabetically(allFolderFiles.get(1) ); // adds normal files
+        ArrayList<NameList> directoryFilesSplitAlfa = splitAlfabetical(allFolderFiles.get(0) ); // adds directory files
+        ArrayList<NameList> normalFilesSplitAlfa = splitAlfabetical(allFolderFiles.get(1) ); // adds normal files
 
         NameList nameDirectoryFilesSplitAlfa = new NameList(directoryFilesSplitAlfa); nameDirectoryFilesSplitAlfa.setListName("Directory files split alfabetically: ");
         NameList nameNormalFilesSplitAlfa = new NameList(normalFilesSplitAlfa); nameNormalFilesSplitAlfa.setListName("Normal files split alfabetically: ");
@@ -224,13 +226,14 @@ public class Main {
         ArrayList<NameList> norFile = filesSplitAlfa.get(1).getList();
 
         System.out.println("\nDirectory files in the map: ");
-        goThroughNameList(dirFile);
+        printThroughNameList(dirFile);
 
         System.out.println("\nNormal files in the map: ");
-        goThroughNameList(norFile);
+        printThroughNameList(norFile);
     }
 
-    private static void goThroughNameList(ArrayList<NameList> arrayNameList) {
+    @SuppressWarnings("unchecked")
+    private static void printThroughNameList(ArrayList<NameList> arrayNameList) {
         for (NameList na: arrayNameList) {
             ArrayList<File> arr = na.getList();
             System.out.println(na.toString());
@@ -241,6 +244,76 @@ public class Main {
         }
     }
 
+
+    private static void readStringToTxtFile (String path, String text) {
+
+        File testFile = new File(path);
+
+        try {
+
+            FileWriter fw = new FileWriter(testFile) ;
+            fw.write(text);
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    private static void ArrayListToFile(String folderName,String fileName,ArrayList<String> text) {
+
+        String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
+        File file = new File(path);
+
+        try {
+            if(!file.exists() ) {
+                file.createNewFile();
+            }
+
+            BufferedWriter bfOut = new BufferedWriter(new FileWriter(file));
+
+            for (int i=0; i< text.size(); i++) {
+                bfOut.write(text.get(i));
+                bfOut.newLine();
+            }
+
+            bfOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void readFromFile (String folderName,String fileName,ArrayList<String> text) {
+        String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
+        File file = new File(path);
+
+        BufferedReader bfInn = null;
+        String line;
+
+        try {
+            bfInn = new BufferedReader(new FileReader(file));
+
+            while ((line = bfInn.readLine() ) != null ) {
+                System.out.println(line);
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                bfInn.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    
     private static void DoubleArraylistToFile (String path, String fileName, ArrayList<ArrayList<File>>  filesSplitAlfabetically ) {
         String newFilePath = path+"\\"+fileName+".txt";
 
@@ -360,74 +433,6 @@ public class Main {
         // replace \\ with /
         s = s.replace("\\", "/");
         */
-
-    }
-
-    private static void readStringToTxtFile (String path, String text) {
-
-        File testFile = new File(path);
-
-        try {
-
-            FileWriter fw = new FileWriter(testFile) ;
-            fw.write(text);
-            fw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-
-    }
-
-    private static void ArrayListToFile(String folderName,String fileName,ArrayList<String> text) {
-
-        String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
-        File file = new File(path);
-
-        try {
-            if(!file.exists() ) {
-                file.createNewFile();
-            }
-
-            BufferedWriter bfOut = new BufferedWriter(new FileWriter(file));
-
-            for (int i=0; i< text.size(); i++) {
-                bfOut.write(text.get(i));
-                bfOut.newLine();
-            }
-
-            bfOut.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private static void readFromFile (String folderName,String fileName,ArrayList<String> text) {
-        String path = "C:/Users/Bao Thien/Downloads/"+folderName+"/"+fileName+".txt";
-        File file = new File(path);
-
-        BufferedReader bfInn = null;
-        String line;
-
-        try {
-            bfInn = new BufferedReader(new FileReader(file));
-
-            while ((line = bfInn.readLine() ) != null ) {
-                System.out.println(line);
-            }
-
-        } catch (IOException e){
-            e.printStackTrace();
-        } finally {
-            try {
-                bfInn.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
     }
 

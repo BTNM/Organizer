@@ -8,16 +8,28 @@ import java.util.Objects;
 /**
  * Created by BaoTNM on 07.08.2016.
  */
-public class NameList {
-    ArrayList<File> mainList;
+public class NameList<T extends ArrayList<T>>{
+    ArrayList<T> mainList;
     String name;
 
-    public NameList (ArrayList<File> list) {
+    public NameList (ArrayList<T> list) {
         mainList = list;
     }
 
-    public ArrayList getList() {
+    public void add (T element) {
+        mainList.add(element);
+    }
+
+    public void addList (ArrayList<T> list) {
+        mainList.add((T) list);
+    }
+
+    public ArrayList<T> getList() {
         return mainList;
+    }
+
+    public int getListSize() {
+        return mainList.size();
     }
 
     public String getListName() {
@@ -28,13 +40,15 @@ public class NameList {
         this.name = name;
     }
 
-
-
-    /*
-    public String getListItem(int i) {
-        return list.get(i);
+    @Override
+    public String toString() {
+        return "\n"+name;
     }
 
+    //public ArrayList getListItem(int i) {
+    //    return mainList.get(i);
+    //}
+    /*
     public readFolderInventory () {
 
         try {
