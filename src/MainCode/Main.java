@@ -99,6 +99,7 @@ public class Main {
         new File(pathName+folderName).mkdirs();
     }
 
+    @SuppressWarnings("unchecked")
     private static ArrayList<NameList> specificFolderContent(String path) {
         File specificFolder = new File(path);
 
@@ -126,6 +127,7 @@ public class Main {
         return allFolderFiles;*/
     }
 
+    @SuppressWarnings("unchecked")
     private static ArrayList<NameList> splitAlfabetically (NameList fileList) {
         ArrayList<File> filesAE = new ArrayList<>();
         ArrayList<File> filesFJ = new ArrayList<>();
@@ -178,7 +180,7 @@ public class Main {
         NameList nUZ = new NameList(filesUZ); nUZ.setListName("Files in U-Z: ");
         NameList nNotAlfa = new NameList(filesNotAlfa); nNotAlfa.setListName("Files in Number/Signs etc: ");
 
-        ArrayList<NameList> result = new ArrayList<>(Arrays.asList(nAE,nFJ,nKO,nPT,nUZ,nNotAlfa));
+        //ArrayList<NameList> result = new ArrayList<>(Arrays.asList(nAE,nFJ,nKO,nPT,nUZ,nNotAlfa));
 
         //ArrayList<ArrayList<File>> splitAlfa = new ArrayList<>(Arrays.asList(filesAE, filesFJ, filesKO, filesPT, filesUZ,filesNotAlfa));
         //NameList splitAlfa = new NameList(null);
@@ -192,9 +194,10 @@ public class Main {
         //ArrayList<NameList> result = new ArrayList<>();
         //result.add(splitAlfa);
 
-        return result;
+        return new ArrayList<>(Arrays.asList(nAE,nFJ,nKO,nPT,nUZ,nNotAlfa));
     }
 
+    @SuppressWarnings("unchecked")
     private static ArrayList<NameList> folderSplitAlfabetically(String path) {
         ArrayList<NameList> allFolderFiles = specificFolderContent(path);
 
@@ -205,14 +208,13 @@ public class Main {
         NameList nameNormalFilesSplitAlfa = new NameList(normalFilesSplitAlfa); nameNormalFilesSplitAlfa.setListName("Normal files split alfabetically: ");
 
         //ArrayList<ArrayList<ArrayList<File>>> allFilesSplitAlfa = new ArrayList<>(Arrays.asList(directoryFilesSplitAlfa, normalFilesSplitAlfa));
-        //ArrayList<ArrayList<NameList>> allFilesSplitAlfa = new ArrayList<>(Arrays.asList(directoryFilesSplitAlfa, normalFilesSplitAlfa));
-
-        ArrayList<NameList> allNameFilesSplitAlfa = new ArrayList<>(Arrays.asList(nameDirectoryFilesSplitAlfa,nameNormalFilesSplitAlfa));
+        //ArrayList<NameList> allNameFilesSplitAlfa = new ArrayList<>(Arrays.asList(nameDirectoryFilesSplitAlfa,nameNormalFilesSplitAlfa));
 
         //return allFilesSplitAlfa;
-        return allNameFilesSplitAlfa;
+        return new ArrayList<>(Arrays.asList(nameDirectoryFilesSplitAlfa,nameNormalFilesSplitAlfa));
     }
 
+    @SuppressWarnings("unchecked")
     private static void consolePrintArraylist(ArrayList<NameList> filesSplitAlfa) {
         //NameList directoryFiles = filesSplitAlfa.get(0);
         //NameList normalFiles = filesSplitAlfa.get(1);
@@ -222,22 +224,21 @@ public class Main {
         ArrayList<NameList> norFile = filesSplitAlfa.get(1).getList();
 
         System.out.println("\nDirectory files in the map: ");
-        for (NameList na: dirFile) {
-            ArrayList<File> arr = na.getList();
-            System.out.println(na.toString());
-            for (File f: arr) {
-                System.out.println(f.getName());
-            }
-        }
+        goThroughNameList(dirFile);
+
         System.out.println("\nNormal files in the map: ");
-        for (NameList na: norFile) {
+        goThroughNameList(norFile);
+    }
+
+    private static void goThroughNameList(ArrayList<NameList> arrayNameList) {
+        for (NameList na: arrayNameList) {
             ArrayList<File> arr = na.getList();
             System.out.println(na.toString());
+
             for (File f: arr) {
                 System.out.println(f.getName());
             }
         }
-        
     }
 
     private static void DoubleArraylistToFile (String path, String fileName, ArrayList<ArrayList<File>>  filesSplitAlfabetically ) {
